@@ -1,0 +1,27 @@
+import { AbortablePromiseFactory } from '../abortable-promise-factory.js';
+import { Abortable } from '../abortable.js';
+
+export async function abortableSequence(
+  factories: Iterable<AbortablePromiseFactory<void>>,
+  { signal }: Abortable = {},
+): Promise<void> {
+  let isErrored: boolean = false;
+  let sharedError: unknown;
+
+  for (const factory of factories) {
+    try {
+      await factory(signal);
+    } catch (error: unknown) {
+      if (isErrored) {
+        sharedError = new SuppressedError(error, sharedError);
+      } else {
+        isErrored = true;
+        sharedError = error;
+      }
+    }
+  }
+
+  if (isErrored) {
+    throw sharedError;
+  }
+}
