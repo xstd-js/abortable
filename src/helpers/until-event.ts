@@ -1,4 +1,4 @@
-import type { Abortable } from '../abortable.js';
+import { type Abortable } from '../abortable.js';
 
 /**
  * Returns a Promise resolved when the first Event is received from `target.addEventListener(type, ...)`.

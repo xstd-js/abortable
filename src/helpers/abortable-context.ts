@@ -1,4 +1,4 @@
-import { AbortablePromiseFactory } from '../abortable-promise-factory.js';
+import { type AbortablePromiseFactory } from '../abortable-promise-factory.js';
 import { type Abortable } from '../abortable.js';
 
 /**
